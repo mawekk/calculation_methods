@@ -13,8 +13,9 @@ def print_table(headers, rows, accuracy=15, t='e'):
 def get_format(accuracy, t): return f'.{accuracy}{t}'
 
 
-def print_matrix(matrix, text):
-    print(text)
+def print_matrix(matrix, text=""):
+    if text != "":
+        print(text)
     with numpy.printoptions(precision=3, suppress=True):
         result = str(matrix)
         result = result.replace(" [", "").replace("]", "").lstrip("[[")

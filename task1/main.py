@@ -1,4 +1,4 @@
-import test
+from test_data import get_test_data
 import criteria as c
 from outputs import print_table, empty_print, print_matrix
 
@@ -6,7 +6,7 @@ HEADERS = ["Спектральный критерий", "Объемный кри
 
 
 def main():
-    data = test.get_test_data()
+    data = get_test_data()
 
     for (matrix, vector) in data:
         print_matrix(matrix, "Матрица A = ")

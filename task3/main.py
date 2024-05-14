@@ -1,6 +1,6 @@
 from rotation_method import solve_with_rotation_method
 import numpy
-from task1.test import get_test_data
+from test_data import get_test_data
 from outputs import print_table, empty_print, print_matrix
 import task1.criteria as c
 

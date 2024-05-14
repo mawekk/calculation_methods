@@ -1,10 +1,24 @@
+import math
 import random
-
 import numpy
 
 
 def generate_vector(size):
     return numpy.random.rand(size)
+
+
+def generate_discharged_symmetrical_matrix(size):
+    non_zero_count = math.floor(size ** 2 * 0.1) - size
+    matrix = numpy.diag(numpy.random.randint(100, 1000, size=size))
+
+    while non_zero_count > 0:
+        i = random.randint(1, size - 1)
+        j = random.randint(0, i - 1)
+        matrix[i][j] = random.randint(1, 5)
+        matrix[j][i] = matrix[i][j]
+        non_zero_count -= 2
+
+    return matrix
 
 
 def book_matrix():

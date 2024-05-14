@@ -13,7 +13,7 @@ def calculate_volume_criterion(matrix):
 
     size = shape(matrix)[0]
     for i in range(size):
-        volume_criterion *= sqrt(sum(matrix[i, j] ** 2 for j in range(size)))
+        volume_criterion *= sqrt(sum(matrix[i][j] ** 2 for j in range(size)))
 
     return volume_criterion / linalg.det(matrix)
 
