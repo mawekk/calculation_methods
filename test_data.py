@@ -30,8 +30,9 @@ def book_matrix():
     return matrix, vector
 
 
-def hilbert_matrix():
-    size = random.randint(3, 5)
+def hilbert_matrix(size=None):
+    if size is None:
+        size = random.randint(3, 5)
     matrix = numpy.array([[1 / (i + j + 1) for i in range(size)] for j in range(size)])
     vector = generate_vector(size)
 
