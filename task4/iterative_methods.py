@@ -24,6 +24,7 @@ def solve_with_simple_iteration_method(a, b, eps=10 ** -6):
 
     h, g = convert_to_an_iterative_form(a, b)
     evaluation = numpy.linalg.norm(h) / (1 - numpy.linalg.norm(h))
+    new_x = 0
 
     while error >= eps:
         iters += 1
@@ -46,6 +47,7 @@ def solve_with_seidel_method(a, b, eps=10 ** -6):
 
     evaluation = numpy.linalg.norm(h) / (1 - numpy.linalg.norm(h))
     helping_matrix = numpy.linalg.inv(numpy.eye(n) - l)
+    new_x = 0
 
     while error >= eps:
         iters += 1
