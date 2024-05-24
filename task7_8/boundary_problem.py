@@ -1,3 +1,22 @@
+import math
+
+import numdifftools
+import numpy
+import scipy
+
+
+def diff(f, n=1):
+    return numdifftools.Derivative(f, 1e-2, n=n)
+
+
+def scalar_product(f, g, a, b):
+    return scipy.integrate.quad(lambda x: f(x) * g(x), a, b)[0]
+
+
+def coord_func(n, a=1, b=1):
+    return lambda x: (1 - x ** 2) * scipy.special.eval_jacobi(n, a, b, x)
+
+
 class BoundaryProblem:
     """
     вид уравнения:
@@ -80,3 +99,40 @@ class BoundaryProblem:
             n *= 2
 
         return grid_x, grid_y, step_and_accuracy
+
+    def solve_with_galerkin_method(self, n):
+        omegas = [coord_func(i) for i in range(n)]
+        matrix = numpy.zeros((n, n))
+        vector = numpy.zeros(n)
+
+        for i in range(n):
+            for j in range(n):
+                lw_j = lambda x: (- self.p(x) * diff(omegas[j], 2)(x) +
+                                  self.q(x) * diff(omegas[j])(x) +
+                                  self.r(x) * omegas[j](x))
+
+                matrix[i, j] = scalar_product(lw_j, omegas[i], self.a, self.b)
+            vector[i] = scalar_product(self.f, omegas[i], self.a, self.b)
+
+        coeffs = numpy.linalg.solve(matrix, vector)
+
+        return lambda x: sum(coeffs[i] * omegas[i](x) for i in range(n))
+
+    def solve_with_collocation_method(self, n):
+        omegas = [coord_func(i) for i in range(n)]
+        points = [math.cos((2 * i - 1) / 2 * n) * math.pi for i in range(1, n + 1)]
+        matrix = numpy.zeros((n, n))
+        vector = numpy.zeros(n)
+
+        for i in range(n):
+            for j in range(n):
+                lw_j = lambda x: (- self.p(x) * diff(omegas[j], 2)(x) +
+                                  self.q(x) * diff(omegas[j])(x) +
+                                  self.r(x) * omegas[j](x))
+
+                matrix[i, j] = lw_j(points[i])
+            vector[i] = self.f(points[i])
+
+        coeffs = numpy.linalg.solve(matrix, vector)
+
+        return lambda x: sum(coeffs[i] * omegas[i](x) for i in range(n))
