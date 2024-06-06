@@ -30,19 +30,6 @@ def main():
 
     plt.show()
 
-    # u1_i = he.solve_with_implicit_scheme(10, 30)
-    # fig1, ax1 = plt.subplots(subplot_kw={"projection": "3d"})
-    # x1, t1 = np.meshgrid(u1_i[0], u1_i[1])
-    # surf1 = ax1.plot_surface(x1, t1, u1_i[2], cmap=cm.viridis, alpha=0.7)
-    # ax1.view_init(elev=30, azim=45, roll=0)
-    # plt.show()
-    #
-    # u1_i = he.solve_with_explicit_scheme(20, 30)
-    # fig1, ax1 = plt.subplots(subplot_kw={"projection": "3d"})
-    # x1, t1 = np.meshgrid(u1_i[0], u1_i[1])
-    # surf1 = ax1.plot_surface(x1, t1, u1_i[2], cmap=cm.viridis, alpha=0.7)
-    # ax1.view_init(elev=30, azim=45, roll=0)
-    # plt.show()
 
 if __name__ == "__main__":
     main()
